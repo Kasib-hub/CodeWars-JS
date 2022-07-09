@@ -4,4 +4,8 @@
 let num = 348597;
 
 // Convert numbers to strings, then array, then reverse.
-console.log(num.toString().split('').reverse())
+let res = num.toString().split('').reverse().map(num => {
+    return Number(num)
+})
+
+console.log(res)
