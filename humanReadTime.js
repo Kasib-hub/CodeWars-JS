@@ -18,36 +18,18 @@ function formatDuration (seconds) {
   let output_str = ''
   for (key in true_time) {
     if (true_time[key] > 1) {
-      if (key === 'second') {
-        output_str += `and ${true_time[key]} ${key}s`
-      } else {
-        output_str += `${true_time[key]} ${key}s, `
-      }
-    } else if (key === 'second') {
-      output_str += `and ${true_time[key]} ${key}`
+      output_str += `${true_time[key]} ${key}s, `
     } else {
       output_str += `${true_time[key]} ${key}, `
     }
   }
-  // and for last position
-  if (!output_str.includes('second')) {
 
+  // handling cases
+  let strArr = output_str.split(',')
+  if (strArr.length <= 2) {
+    return output_str.slice(0, output_str.length - 2)
   }
-
-  // adding commas
-  let strng = output_str.split(' ')
-  if (strng.length === 3) {
-    return output_str.replace(/, |and /, '')
-  }  
-  else if (strng.length < 6) {
-    let res = output_str.replace(/,/g, '')
-    return res
-  } else {
-    let comma = output_str.lastIndexOf(',')
-    let new_str = output_str.slice(0, comma) + output_str.slice(comma+1)
-    
-    return new_str
-  }
+  return output_str
 }
 console.log(formatDuration(1))
 console.log(formatDuration(62))
@@ -55,6 +37,7 @@ console.log(formatDuration(120))
 console.log(formatDuration(3600))
 console.log(formatDuration(3662))
 console.log(formatDuration(7355220))
+
 // assert.strictEqual(formatDuration(1), "1 second");
 // assert.strictEqual(formatDuration(62), "1 minute and 2 seconds");
 // assert.strictEqual(formatDuration(120), "2 minutes");
