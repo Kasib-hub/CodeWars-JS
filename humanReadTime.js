@@ -1,4 +1,8 @@
 function formatDuration (seconds) {
+  if(seconds === 0) {
+    return 'now'
+  }
+  
   let time = {
     'year': 31536000,
     'day': 86400,
@@ -28,20 +32,16 @@ function formatDuration (seconds) {
   let strArr = output_str.split(',')
   if (strArr.length <= 2) {
     return output_str.slice(0, output_str.length - 2)
+  } else if (strArr.length === 3) {
+      //pop off last item
+      strArr.pop()
+      return strArr.join(' and')
+  } else {
+      // pop off last item, add the 'and', retain commas before and
+      strArr.pop()
+      // you can slice a list too
+      let pre = strArr.slice(0, strArr.length - 1).join(',')
+      let post = strArr.slice(strArr.length - 1)
+      return `${pre} and${post.join('')}`
   }
-  return output_str
 }
-console.log(formatDuration(1))
-console.log(formatDuration(62))
-console.log(formatDuration(120))
-console.log(formatDuration(3600))
-console.log(formatDuration(3662))
-console.log(formatDuration(7355220))
-
-// assert.strictEqual(formatDuration(1), "1 second");
-// assert.strictEqual(formatDuration(62), "1 minute and 2 seconds");
-// assert.strictEqual(formatDuration(120), "2 minutes");
-// assert.strictEqual(formatDuration(3600), "1 hour");
-// assert.strictEqual(formatDuration(3662), "1 hour, 1 minute and 2 seconds");
-// });
-// '85 days, 3 hours, 7 minutes ' to equal '85 days, 3 hours and 7 minutes'
